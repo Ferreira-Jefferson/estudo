@@ -7,6 +7,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Configuração do pool de conexões MySQL
 const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -14,13 +15,18 @@ const db = mysql.createPool({
   database: process.env.DB_NAME
 });
 
+// Endpoint para retornar todos os dados
 app.get('/data', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM your_table');
     res.json(rows);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao buscar dados do banco.' });
   }
 });
 
-app.listen(port, () => console.log(`API running on port ${port}`));
+// Inicializando o servidor
+app.listen(port, () => {
+  console.log(`API rodando na porta ${port}`);
+});

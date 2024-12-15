@@ -5,9 +5,11 @@ services:
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: yourpassword
-      MYSQL_DATABASE: yourdatabase
+      MYSQL_DATABASE: degustware
     ports:
       - "3306:3306"
+    volumes:
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
 
   api:
     build: ./api
