@@ -28,3 +28,8 @@ docker inspect mysql-container
 docker build -t node-image -f api/Dockerfile .
 
 docker run -d -v $(pwd)/api:/home/node/app -p 9001:9001 --link mysql-container --rm --name node-container node-image
+
+//Para rodar a api com pm2
+cd /api
+pm2 start npm --name "api" -- run start
+
