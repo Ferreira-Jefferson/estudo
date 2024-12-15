@@ -15,6 +15,8 @@ const db = mysql.createPool({
   database: process.env.DB_NAME
 });
 
+console.log('DB_NAME:', process.env.DB_NAME);
+
 // Endpoint para retornar todos os dados
 app.get('/data', async (req, res) => {
   try {
