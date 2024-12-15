@@ -24,3 +24,5 @@ docker stop mysql-container
 docker run -d -v $(pwd)/api/db/data:/var/lib/mysql --rm --name mysql-container mysql-image
 
 docker inspect mysql-container
+
+docker build -t node-image -f api/Dockerfile .
