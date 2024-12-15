@@ -5,7 +5,7 @@ services:
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: yourpassword
-      MYSQL_DATABASE: degustware  # Este é o nome do banco de dados
+      MYSQL_DATABASE: degustware
     ports:
       - "3306:3306"
     volumes:
@@ -19,7 +19,7 @@ services:
       DB_HOST: mysql
       DB_USER: root
       DB_PASSWORD: yourpassword
-      DB_NAME: degustware  # Corrigido aqui para degustware
+      DB_NAME: degustware
     depends_on:
       - mysql
 
@@ -27,5 +27,14 @@ services:
     build: ./front
     ports:
       - "80:80"
+    depends_on:
+      - api
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - api
