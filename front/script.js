@@ -1,4 +1,4 @@
-fetch('http://api/data')
+fetch('http://194.238.25.229/data')
   .then(response => response.json())
   .then(data => {
     const list = document.getElementById('data-list');
