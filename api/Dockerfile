@@ -1,20 +1,26 @@
-# Usar a imagem do Node.js
-FROM node:18-alpine
+# Use Node.js como imagem base
+FROM node:18
 
-# Definir diretório de trabalho
+# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos de configuração
-COPY package*.json ./
-
-# Instalar dependências
-RUN npm install
-
-# Copiar o restante dos arquivos da API
+# Copie os arquivos do projeto
 COPY . .
 
-# Expor a porta 3000
-EXPOSE 3000
+# Instale as dependências
+RUN npm install
 
-# Comando para iniciar a API
-CMD ["node", "server.js"]
+# Copie o script wait-for-it.sh
+COPY wait-for-it.sh /wait-for-it.sh
+
+# Torne o script executável
+RUN chmod +x /wait-for-it.sh
+
+# Defina as variáveis de ambiente do banco de dados
+ENV MYSQL_HOST=db
+ENV MYSQL_USER=user
+ENV MYSQL_PASSWORD=userpassword
+ENV MYSQL_DATABASE=degustware
+
+# Execute o script wait-for-it e depois inicie a API
+CMD /wait-for-it.sh $MYSQL_HOST:3306 -- npm start
