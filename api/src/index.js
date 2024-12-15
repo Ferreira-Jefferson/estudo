@@ -24,6 +24,6 @@ app.get('/products', function(req, res) {
 });
 
 
-app.listen(9001, 'http://degustware.com.br/', function() {
+app.listen(9001, '194.238.25.229', function() {
   console.log('Listening on port 9001');
 })
