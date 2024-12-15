@@ -5,7 +5,7 @@ docker build -t mysql-image -f api/db/Dockerfile .
 
 docker image ls
 
-docker run -d --rm --name mysql-container mysql-image
+docker run -d -v $(pwd)/api/db/data:/var/lib/mysql --rm --name mysql-container mysql-image
 
 docker ps
 
@@ -21,13 +21,13 @@ exit
 
 docker stop mysql-container
 
-docker run -d -v $(pwd)/api/db/data:/var/lib/mysql --rm --name mysql-container mysql-image
-
 docker inspect mysql-container
 
 docker build -t node-image -f api/Dockerfile .
 
 docker run -d -v $(pwd)/api:/home/node/app -p 9001:9001 --link mysql-container --rm --name node-container node-image
+
+docker ps
 
 //Para rodar a api com pm2
 cd /api
