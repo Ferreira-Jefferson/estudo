@@ -5,7 +5,7 @@ services:
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: yourpassword
-      MYSQL_DATABASE: degustware
+      MYSQL_DATABASE: degustware  # Este é o nome do banco de dados
     ports:
       - "3306:3306"
     volumes:
@@ -19,7 +19,7 @@ services:
       DB_HOST: mysql
       DB_USER: root
       DB_PASSWORD: yourpassword
-      DB_NAME: yourdatabase
+      DB_NAME: degustware  # Corrigido aqui para degustware
     depends_on:
       - mysql
 
