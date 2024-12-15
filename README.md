@@ -28,6 +28,9 @@ docker build -t node-image -f api/Dockerfile .
 docker run -d -v $(pwd)/api:/home/node/app -p 9001:9001 --link mysql-container --rm --name node-container node-image
 
 docker ps
+docker restart <>
+docker kill <>
+
 
 //Para rodar a api com pm2
 cd /api

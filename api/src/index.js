@@ -14,16 +14,15 @@ connection.connect();
 
 app.get('/products', function(req, res) {
   connection.query('SELECT * FROM products', function (error, results) {
-
     if (error) { 
-      throw error
+      throw error;
     };
-
     res.send(results.map(item => ({ name: item.name, price: item.price })));
   });
 });
 
-
-app.listen(9001, 'http://172.17.0.3/', function() {
-  console.log('Listening on port 9001');
-})
+// Corrigindo o método app.listen()
+const port = 9001;
+app.listen(port, function() {
+  console.log(`Server is listening on port ${port}`);
+});
