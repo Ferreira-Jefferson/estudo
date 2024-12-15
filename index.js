@@ -1,13 +1,11 @@
-console.log("Hello, World!")
-console.log("Atualizado")
-console.log("Atualizado 2")
-console.log("Atualizado 3")
-console.log("Atualizado 4")
-console.log("Atualizado 5")
-console.log("Atualizado 6")
-console.log("Atualizado 7")
-console.log("Atualizado 8")
-console.log("Atualizado 9")
-console.log("Atualizado 10")
-console.log("Atualizado 11")
-console.log("Atualizado 12")
+const express = require('express');
+const app = express();
+const port = 80; // Porta padrão para HTTP
+
+app.get('/', (req, res) => {
+    res.send('<h1>Bem-vindo ao meu servidor!</h1><p>Servidor funcionando!</p>');
+});
+
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://www.degustware.com.br:${port}`);
+});
