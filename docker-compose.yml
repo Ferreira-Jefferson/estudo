@@ -12,6 +12,12 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - degustware_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
 
   api:
     build: ./api
@@ -22,20 +28,22 @@ services:
       MYSQL_PASSWORD: userpassword
       MYSQL_DATABASE: degustware
     ports:
-      - "3000:3000"  # API expõe a porta 3000 para o host
+      - "3000:3000"  # Porta interna para o container da API
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - degustware_network
 
   front:
     build: ./front
     container_name: front
+    expose:
+      - "80"  # Expõe a porta internamente, sem usar a porta 80 do host
     networks:
       - degustware_network
     depends_on:
       - api
-    # Não expõe a porta 80 para o host, o Nginx se encarrega disso
 
   nginx:
     image: nginx:alpine
@@ -43,9 +51,10 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - "80:80"  # Nginx vai expor a porta 80 para o host
+      - "80:80"  # Só o Nginx expõe a porta 80 para o host
     depends_on:
       - front
+      - api
     networks:
       - degustware_network
 
