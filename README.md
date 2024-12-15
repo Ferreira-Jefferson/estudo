@@ -26,3 +26,5 @@ docker run -d -v $(pwd)/api/db/data:/var/lib/mysql --rm --name mysql-container m
 docker inspect mysql-container
 
 docker build -t node-image -f api/Dockerfile .
+
+docker run -d -v $(pwd)/api:/home/node/app -p 9001:9001 --link mysql-container --rm --name node-container node-image
