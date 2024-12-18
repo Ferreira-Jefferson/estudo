@@ -45,7 +45,8 @@ services:
     container_name: nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - /etc/letsencrypt/live/degustware.com.br:/etc/letsencrypt/live/degustware.com.br:ro
+      - /etc/letsencrypt/live/degustware.com.br/fullchain.pem:/etc/letsencrypt/live/degustware.com.br/fullchain.pem:ro
+      - /etc/letsencrypt/live/degustware.com.br/privkey.pem:/etc/letsencrypt/live/degustware.com.br/privkey.pem:ro
     ports:
       - "80:80"  # Porta HTTP
       - "443:443"  # Porta HTTPS
