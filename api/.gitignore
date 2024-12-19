@@ -1,0 +1,32 @@
+# Dependências do Node
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Diretórios de build
+build/
+dist/
+
+# Arquivos de ambiente
+.env
+
+# Caches
+.cache/
+.npm/
+.eslintcache
+nyc_output/
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-workspace
+
+# Test coverage reports
+coverage/
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db
