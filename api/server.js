@@ -1,7 +1,6 @@
 const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser'); // Para suportar requisições POST
-const motoboysRoutes = require('./motoboys'); // Importar o arquivo motoboys.js
 const cors = require('cors');
 
 const app = express();
