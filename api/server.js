@@ -27,8 +27,8 @@ db.connect(err => {
 });
 
 // Endpoint para listar produtos
-app.get('/api', (req, res) => {
-  db.query('SELECT * FROM products', (err, results) => {
+app.get('/api', async (req, res) => {
+  await db.query('SELECT * FROM products', (err, results) => {
     if (err) throw err;
     res.json(results);
   });
