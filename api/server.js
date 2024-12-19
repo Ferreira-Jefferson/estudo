@@ -12,19 +12,25 @@ app.use(cors());
 // Middleware para parsear JSON
 app.use(bodyParser.json());
 
-// Conectar ao banco de dados MySQL
 const db = mysql.createPool({
   host: process.env.MYSQL_HOST || 'db',
   user: process.env.MYSQL_USER || 'user',
   password: process.env.MYSQL_PASSWORD || 'userpassword',
-  database: process.env.MYSQL_DATABASE || 'degustware'
+  database: process.env.MYSQL_DATABASE || 'degustware',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-
-db.connect(err => {
-  if (err) throw err;
-  console.log('Conectado ao banco de dados MySQL');
-});
+// Teste de conexão (opcional)
+(async () => {
+  try {
+    await db.getConnection();
+    console.log('Conectado ao banco de dados MySQL com sucesso!');
+  } catch (error) {
+    console.error('Erro ao conectar ao banco de dados:', error.message);
+  }
+})();
 
 // Endpoint para listar produtos
 app.get('/api', async (req, res) => {
