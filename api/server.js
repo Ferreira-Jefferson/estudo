@@ -1,7 +1,13 @@
 const express = require('express');
 const mysql = require('mysql2');
+const bodyParser = require('body-parser'); // Para suportar requisições POST
+const motoboysRoutes = require('./motoboys'); // Importar o arquivo motoboys.js
+
 const app = express();
 const port = 3000;
+
+// Middleware para parsear JSON
+app.use(bodyParser.json());
 
 // Conectar ao banco de dados MySQL
 const db = mysql.createConnection({
@@ -16,7 +22,7 @@ db.connect(err => {
   console.log('Conectado ao banco de dados MySQL');
 });
 
-// Rota para listar produtos
+// Endpoint para listar produtos
 app.get('/api', (req, res) => {
   db.query('SELECT * FROM products', (err, results) => {
     if (err) throw err;
@@ -24,6 +30,9 @@ app.get('/api', (req, res) => {
   });
 });
 
+// Usar rotas do arquivo motoboys.js
+app.use('/api', motoboysRoutes);
+
 app.listen(port, () => {
-  console.log(`API rodando em http://localhost:${port}`);
+  console.log(`API rodando em https://degustware.com.br:${port}/api`);
 });

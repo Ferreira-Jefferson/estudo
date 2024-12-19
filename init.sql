@@ -11,3 +11,49 @@ INSERT INTO products (name, description, price) VALUES
   ('Bife Acebolado', 'Bife com cebola', 25.50),
   ('Frango à Milanesa', 'Frango empanado e frito', 22.00),
   ('Arroz e Feijão', 'Acompanhamento tradicional', 10.00);
+-- Criar a tabela de motoboys
+CREATE TABLE motoboys (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    codigo INT NOT NULL UNIQUE,
+    diaria DECIMAL(10, 2) NOT NULL
+);
+
+-- Inserir dados de teste na tabela de motoboys
+INSERT INTO motoboys (nome, codigo, diaria) VALUES 
+('João Silva', 1234, 100.00),
+('Maria Oliveira', 5678, 120.00),
+('Carlos Santos', 9101, 150.00);
+
+-- Criar a tabela de bairros
+CREATE TABLE bairros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    taxa DECIMAL(10, 2) NOT NULL
+);
+
+-- Inserir dados de teste na tabela de bairros
+INSERT INTO bairros (nome, taxa) VALUES 
+('Centro', 10.00),
+('Zona Sul', 15.00),
+('Zona Norte', 12.50),
+('Zona Leste', 20.00);
+
+-- Criar a tabela de entregas
+CREATE TABLE entregas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo_pedido VARCHAR(50) NOT NULL,
+    bairro VARCHAR(255) NOT NULL,
+    problema BOOLEAN NOT NULL,
+    taxa DECIMAL(10, 2) NOT NULL,
+    data_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    motoboy_id INT NOT NULL,
+    FOREIGN KEY (motoboy_id) REFERENCES motoboys(id)
+);
+
+-- Inserir dados de teste na tabela de entregas
+INSERT INTO entregas (codigo_pedido, bairro, problema, taxa, motoboy_id) VALUES 
+('ABC123', 'Centro', FALSE, 10.00, 1),
+('DEF456', 'Zona Sul', FALSE, 15.00, 2),
+('GHI789', 'Zona Norte', TRUE, 12.50, 3),
+('JKL012', 'Zona Leste', FALSE, 20.00, 1);
