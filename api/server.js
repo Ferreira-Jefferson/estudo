@@ -6,20 +6,20 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-// Middleware
+// Middleware cors
 app.use(cors());
-app.use(bodyParser.json());
 
 // Middleware para parsear JSON
 app.use(bodyParser.json());
 
 // Conectar ao banco de dados MySQL
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.MYSQL_HOST || 'db',
   user: process.env.MYSQL_USER || 'user',
   password: process.env.MYSQL_PASSWORD || 'userpassword',
   database: process.env.MYSQL_DATABASE || 'degustware'
 });
+
 
 db.connect(err => {
   if (err) throw err;
@@ -28,11 +28,15 @@ db.connect(err => {
 
 // Endpoint para listar produtos
 app.get('/api', async (req, res) => {
-  await db.query('SELECT * FROM products', (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+  try {
+    const [rows] = await db.query('SELECT * FROM products');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao listar produtos.' });
+  }
 });
+
+
 
 
 // Listar motoboys
