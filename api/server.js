@@ -39,5 +39,5 @@ app.get('/api', (req, res) => {
 app.use('/api', motoboysRoutes);
 
 app.listen(port, () => {
-  console.log(`API rodando em https://degustware.com.br:${port}/api`);
+  console.log(`API rodando em https://degustware.com.br/api`);
 });
