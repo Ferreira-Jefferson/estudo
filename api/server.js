@@ -2,9 +2,16 @@ const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser'); // Para suportar requisições POST
 const motoboysRoutes = require('./motoboys'); // Importar o arquivo motoboys.js
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+const cors = require('cors');
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
 
 // Middleware para parsear JSON
 app.use(bodyParser.json());

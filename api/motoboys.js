@@ -1,12 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2/promise');
-const cors = require('cors');
-const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
 
 // MySQL connection
 const db = mysql.createPool({
