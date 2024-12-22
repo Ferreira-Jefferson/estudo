@@ -35,7 +35,6 @@ const db = mysql.createPool({
 // Endpoint para listar produtos
 app.get('/api', async (req, res) => {
   try {
-  console.log(db)
     const [rows] = await db.query('SELECT * FROM products;');
     res.json(rows);
   } catch (err) {
