@@ -1,10 +1,7 @@
 # Etapa 1: Construção
-FROM node:18 AS builder
+FROM node:18 
 
 WORKDIR /app
-
-# Instala o Node.js e o npm
-RUN apk add --no-cache nodejs npm
 
 # Copia os arquivos de dependências
 COPY package.json package-lock.json ./
@@ -18,21 +15,13 @@ COPY . .
 # Build da aplicação
 RUN npm run build
 
-# Etapa 2: Execução
-FROM node:18
-
-WORKDIR /app
-
-# Instala o Node.js e o npm
-RUN apk add --no-cache nodejs npm
-
 # Copia apenas os arquivos necessários do estágio de construção
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/package-lock.json ./
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
+COPY ./app/package.json ./
+COPY ./app/package-lock.json ./
+COPY ./app/node_modules ./node_modules
+COPY ./app/.next ./.next
+COPY ./app/next.config.js ./
+COPY ./app/public ./public
 
 # Expondo a porta 3000
 EXPOSE 3000
