@@ -3,6 +3,9 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
+# Instala o Node.js e o npm
+RUN apk add --no-cache nodejs npm
+
 # Copia os arquivos de dependências
 COPY package.json package-lock.json ./
 
