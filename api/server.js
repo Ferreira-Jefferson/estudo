@@ -35,7 +35,8 @@ const db = mysql.createPool({
 // Endpoint para listar produtos
 app.get('/api', async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM products');
+  console.log(db)
+    const [rows] = await db.query('SELECT * FROM products;');
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: 'Erro ao listar produtos.' });
