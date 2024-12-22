@@ -1,19 +1,11 @@
-# Etapa 1: Construção
-FROM node:18 
+# Use Node.js como imagem base
+FROM node:18
 
+# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copia o restante do código
+# Copie os arquivos do projeto
 COPY . .
 
-# Instala as dependências
+# Instale as dependências
 RUN npm install
-
-# Build da aplicação
-RUN npm run Build
-
-# Expondo a porta 3000
-EXPOSE 3000
-
-# Comando para iniciar a aplicação
-CMD ["npm", "start"]
