@@ -3,11 +3,8 @@ services:
     image: mysql:8
     restart: always
     container_name: mysql_db
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: degustware
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
+    env_file: 
+      - ./api/.env
     volumes:
       - db_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -18,11 +15,8 @@ services:
     build: ./api
     restart: always
     container_name: api
-    environment:
-      MYSQL_HOST: db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
-      MYSQL_DATABASE: degustware
+    env_file: 
+      - .env
     depends_on:
       - db
     networks: 
