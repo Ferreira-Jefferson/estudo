@@ -34,8 +34,8 @@ COPY --from=builder /app/public ./public
 # Instala apenas as dependências de produção (não é necessário instalar as devDependencies)
 RUN npm install --only=production
 
-# Expondo a porta 3030
-EXPOSE 3030
+# Expondo a porta 3000
+EXPOSE 3000
 
 # Comando para iniciar a aplicação
 CMD ["npm", "start"]

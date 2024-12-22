@@ -22,7 +22,7 @@ services:
       MYSQL_PASSWORD: userpassword
       MYSQL_DATABASE: degustware
     ports:
-      - "3000:3000"
+      - "3030:3030"
     depends_on:
       - db
 
@@ -31,7 +31,7 @@ services:
     restart: always
     container_name: front
     ports:
-      - "3030:3030"
+      - "3000:3000"
     depends_on:
       - api
 

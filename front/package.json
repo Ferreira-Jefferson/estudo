@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3030"
+    "start": "next start"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",
