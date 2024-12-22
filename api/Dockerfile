@@ -16,11 +16,5 @@ COPY wait-for-it.sh /wait-for-it.sh
 # Torne o script executável
 RUN chmod +x /wait-for-it.sh
 
-# Defina as variáveis de ambiente do banco de dados
-ENV MYSQL_HOST=db
-ENV MYSQL_USER=user
-ENV MYSQL_PASSWORD=userpassword
-ENV MYSQL_DATABASE=degustware
-
 # Execute o script wait-for-it e depois inicie a API
 CMD /wait-for-it.sh $MYSQL_HOST:3306 -- npm start
