@@ -11,7 +11,7 @@ build/
 dist/
 
 # Arquivos de ambiente
-.env
+# .env
 
 # Caches
 .cache/
