@@ -25,7 +25,9 @@ services:
       - "3030:3030"
     depends_on:
       - db
-
+    networks: 
+      - degustware_network
+      
   front:
     build: ./front
     restart: always
@@ -34,6 +36,8 @@ services:
       - "3000:3000"
     depends_on:
       - api
+    networks: 
+      - degustware_network
 
   nginx:
     image: nginx:alpine
@@ -48,6 +52,8 @@ services:
       - "443:443"  # Porta HTTPS
     depends_on:
       - front
+    networks: 
+      - degustware_network
 
 volumes:
   db_data:
