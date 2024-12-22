@@ -24,3 +24,6 @@ ENV MYSQL_DATABASE=degustware
 
 # Execute o script wait-for-it e depois inicie a API
 CMD /wait-for-it.sh $MYSQL_HOST:3306 -- npm start
+
+# Expondo a porta 3000
+EXPOSE 3030

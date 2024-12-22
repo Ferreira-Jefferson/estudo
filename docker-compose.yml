@@ -30,6 +30,7 @@ services:
 
   front:
     build: ./front
+    restart: always
     container_name: front
     ports:
       - "3000:3000"
