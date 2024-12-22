@@ -21,8 +21,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
       MYSQL_DATABASE: degustware
-    ports:
-      - "3000:3000"
     depends_on:
       - db
     networks: 
