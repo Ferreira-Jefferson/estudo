@@ -3,14 +3,11 @@ FROM node:18
 
 WORKDIR /app
 
-# Copia os arquivos de dependências
-COPY package.json package-lock.json ./
+# Copia o restante do código
+COPY . .
 
 # Instala as dependências
 RUN npm install
-
-# Copia o restante do código
-COPY . .
 
 # Build da aplicação
 RUN npm run Build
