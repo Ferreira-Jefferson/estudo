@@ -1,5 +1,5 @@
 # Etapa 1: Construção
-FROM node:18-alpine AS builder
+FROM node:18 AS builder
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ COPY . .
 RUN npm run build
 
 # Etapa 2: Execução
-FROM node:18-alpine
+FROM node:18
 
 WORKDIR /app
 
