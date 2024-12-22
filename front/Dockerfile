@@ -15,8 +15,8 @@ COPY . .
 # Build da aplicação
 RUN npm run build
 
-# Expondo a porta 3000
-EXPOSE 3000
+# Expondo a porta 3030
+EXPOSE 3030
 
 # Comando para iniciar a aplicação
 CMD ["npm", "start"]
