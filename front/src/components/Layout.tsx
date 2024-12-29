@@ -29,7 +29,15 @@ const Layout = ({ children, title, description }: LayoutProps): JSX.Element => {
               Início
             </Link>
           </li>
-          {Object.keys(gradientes).map((cor) => (
+           <li>
+            <Link
+              href="/motoboys"
+              className="text-white font-semibold hover:text-gray-200"
+            >
+              Motoboys
+            </Link>
+          </li>
+          {Object.keys(gradientes).filter((v, i) => i % 2).map((cor) => (
             <li key={cor}>
               <Link
                 href={`/${cor}`}

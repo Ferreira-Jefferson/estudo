@@ -74,6 +74,16 @@ app.get('/api/motoboys/:id', async (req, res) => {
     }
 });
 
+app.get('/api/entregas/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [entregas] = await db.query('SELECT diaria FROM entregas WHERE motoboy_id = ?', [id]);
+        res.json({ ...entregas[0] });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao buscar informações do motoboy.' });
+    }
+});
+
 // Cadastrar nova entrega
 app.post('/api/entregas', async (req, res) => {
     const { codigo_pedido, bairro, problema, taxa, motoboy_id } = req.body;
