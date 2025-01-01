@@ -169,7 +169,7 @@ export default function Motoboys() {
             {entregas.map((entrega, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2">{entrega.codigo_pedido}</td>
-                <td className="border px-4 py-2">{entrega.bairro}</td>
+                <td className="border px-4 py-2">{entrega.bairro_id}</td>
                 <td className="border px-4 py-2">{entrega.taxa}</td>
               </tr>
             ))}
