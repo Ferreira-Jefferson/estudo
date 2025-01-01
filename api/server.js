@@ -96,7 +96,6 @@ app.get("/api/entregas/:id", async (req, res) => {
 // Consultar bairros dinamicamente
 app.get("/api/bairros", async (req, res) => {
   const { query } = req.query
-  console.log({ query })
 
   try {
     if (!query) {
