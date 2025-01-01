@@ -95,7 +95,7 @@ app.get("/api/entregas", async (req, res) => {
       entregas.data_registro
     FROM entregas
     JOIN bairros ON entregas.bairro_id = bairros.id
-    JOIN bairros ON entregas.motoboy_id = motoboys.id
+    JOIN motoboys ON entregas.motoboy_id = motoboys.id
     `
     )
     res.json(entregas)
