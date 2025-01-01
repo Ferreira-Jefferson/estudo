@@ -80,16 +80,55 @@ app.get("/api/motoboys/:id", async (req, res) => {
   }
 })
 
-app.get("/api/entregas/:id", async (req, res) => {
-  const { id } = req.params
+app.get("/api/entregas", async (req, res) => {
+
   try {
     const [entregas] = await db.query(
-      "SELECT * FROM entregas WHERE motoboy_id = ?",
+      `
+    SELECT 
+      entregas.id,
+      entregas.codigo_pedido,
+      entregas.problema,
+      entregas.taxa,
+      motoboys.nome AS motoboy_nome,
+      bairros.nome AS bairro_nome, 
+      entregas.data_registro
+    FROM entregas
+    JOIN bairros ON entregas.bairro_id = bairros.id
+    JOIN bairros ON entregas.motoboy_id = motoboys.id
+    `
+    )
+    res.json(entregas)
+  } catch (error) {
+    console.error("Erro ao buscar entregas:", error)
+    res.status(500).json({ error: "Erro interno no servidor" })
+  }
+})
+
+app.get("/api/entregas/:id", async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const [entregas] = await db.query(
+      `
+    SELECT 
+      entregas.id,
+      entregas.codigo_pedido,
+      entregas.problema,
+      entregas.taxa,
+      entregas.motoboy_id,
+      bairros.nome AS bairro_nome, 
+      entregas.data_registro
+    FROM entregas
+    JOIN bairros ON entregas.bairro_id = bairros.id
+    WHERE entregas.motoboy_id = ?
+    `,
       [id]
     )
-    res.json({ ...entregas[0] })
+    res.json(entregas)
   } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar informações das entregas." })
+    console.error("Erro ao buscar entregas:", error)
+    res.status(500).json({ error: "Erro interno no servidor" })
   }
 })
 

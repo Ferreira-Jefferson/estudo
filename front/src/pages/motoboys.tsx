@@ -44,6 +44,7 @@ export default function Motoboys() {
   }
 
   const handleSelectMotoboy = motoboy => {
+    setAbrirMensagemErro(false)
     setSelectedMotoboy(motoboy?.id)
     setDiaria(motoboy?.diaria || 0)
     setPedidosEntregues(motoboy?.pedidosEntregues || 0)
@@ -51,13 +52,18 @@ export default function Motoboys() {
     handleChangeMotoboy(motoboy?.id)
   }
 
-  const [isModalOpen, setIsModalOpen] = useState(false) 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [abrirMensagemErro, setAbrirMensagemErro] = useState(false)
   const [codigoPedido, setCodigoPedido] = useState("")
-  const [problema, setProblema] = useState(false) 
+  const [problema, setProblema] = useState(false)
 
   const abrirModal = () => {
-    setProblema(false)
+    if (!selectedMotoboy) return setAbrirMensagemErro(true)
+
     setIsModalOpen(true)
+    setProblema(false)
+    setCodigoPedido("")
+    setBairroNome("")
   }
 
   const fecharModal = () => setIsModalOpen(false)
@@ -83,9 +89,12 @@ export default function Motoboys() {
 
     if (response) {
       const data = await fetcher(`/bairros/${bairro_id}`)
-      setEntregas([...entregas, {codigo_pedido: codigoPedido, bairro: data?.nome, taxa}])
+      setEntregas([
+        ...entregas,
+        { codigo_pedido: codigoPedido, bairro: data?.nome, taxa },
+      ])
     }
-    
+
     fecharModal()
   }
 
@@ -110,8 +119,6 @@ export default function Motoboys() {
     setBairroId(sugestao.id)
     setBairroNome(sugestao.nome)
     setTaxa(sugestao.taxa)
-    console.log("ID do bairro selecionado:", sugestao.id)
-    console.log("nome do bairro selecionado:", sugestao.nome)
     setSuggestions([])
   }
 
@@ -169,7 +176,7 @@ export default function Motoboys() {
             {entregas.map((entrega, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2">{entrega.codigo_pedido}</td>
-                <td className="border px-4 py-2">{entrega.bairro_id}</td>
+                <td className="border px-4 py-2">{entrega.bairro_nome}</td>
                 <td className="border px-4 py-2">{entrega.taxa}</td>
               </tr>
             ))}
@@ -216,8 +223,8 @@ export default function Motoboys() {
                     {suggestions.map(sugestao => (
                       <li
                         key={sugestao.id}
-                        className="p-2 hover:bg-gray-200 cursor-pointer"
-                        onClick={() => handleSelectBairro(sugestao)}
+                        className="p-2 hover:bg-gray-200 cursor-pointer w-full"
+                        onMouseDown={() => handleSelectBairro(sugestao)} // Usa onMouseDown para evitar conflitos com onBlur
                       >
                         {sugestao.nome}
                       </li>
@@ -274,6 +281,28 @@ export default function Motoboys() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {abrirMensagemErro && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-md w-11/12 md:w-1/3 z-50">
+          <div className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2 text-red-700"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M18.364 5.636a9 9 0 11-12.728 0M12 8v4m0 4h.01"
+              />
+            </svg>
+            <span>Por favor, selecione um motoboy antes de continuar.</span>
           </div>
         </div>
       )}
