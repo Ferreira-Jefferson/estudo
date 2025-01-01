@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS entregas (
     motoboy_id INT NOT NULL,
     bairro_id INT NOT NULL,
     data_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (motoboy_id) REFERENCES motoboys(id)
+    FOREIGN KEY (motoboy_id) REFERENCES motoboys(id),
     FOREIGN KEY (bairro_id) REFERENCES bairros(id)
 );
 
