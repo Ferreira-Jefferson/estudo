@@ -51,9 +51,9 @@ export default function Motoboys() {
     handleChangeMotoboy(motoboy?.id)
   }
 
-  const [isModalOpen, setIsModalOpen] = useState(false) // Controle do modal
-  const [codigoPedido, setCodigoPedido] = useState("") // Código do pedido
-  const [problema, setProblema] = useState(false) // Checkbox para problemas
+  const [isModalOpen, setIsModalOpen] = useState(false) 
+  const [codigoPedido, setCodigoPedido] = useState("")
+  const [problema, setProblema] = useState(false) 
 
   const abrirModal = () => {
     setProblema(false)
@@ -66,14 +66,14 @@ export default function Motoboys() {
     // Dados da nova entrega
     const novaEntrega = {
       codigo_pedido: codigoPedido,
-      bairro,
       problema,
       taxa,
+      bairro_id: bairro,
       motoboy_id: selectedMotoboy,
     }
 
     // Enviar a requisição para a API
-    const response = await fetcher("/api/entregas", {
+    const response = await fetcher("/entregas", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,6 +82,8 @@ export default function Motoboys() {
     })
 
     if (response) {
+      const data = await fetcher(`/bairros/${bairro}`)
+      setEntregas([...entregas, {codigo_pedido: codigoPedido, bairro: data?.nome, taxa}])
     }
     
     fecharModal()
