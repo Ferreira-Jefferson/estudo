@@ -95,7 +95,8 @@ app.get("/api/entregas/:id", async (req, res) => {
 
 // Consultar bairros dinamicamente
 app.get("/api/bairros", async (req, res) => {
-  const { query } = req.query // Obtém o termo de busca enviado pelo frontend
+  const { query } = req.query
+  console.log({ query })
 
   try {
     if (query.trim() && typeof query === "string") {
@@ -117,10 +118,7 @@ app.get("/api/bairros", async (req, res) => {
 app.get("/api/bairros/:id", async (req, res) => {
   const { id } = req.params
   try {
-    const [bairro] = await db.query(
-      "SELECT * FROM bairros WHERE id = ?",
-      [id]
-    )
+    const [bairro] = await db.query("SELECT * FROM bairros WHERE id = ?", [id])
     res.json({ ...bairro[0] })
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar informações do bairro." })
