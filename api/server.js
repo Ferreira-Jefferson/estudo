@@ -126,11 +126,11 @@ app.get("/api/bairros/:id", async (req, res) => {
 
 // Cadastrar nova entrega
 app.post("/api/entregas", async (req, res) => {
-  const { codigo_pedido, bairro, problema, taxa, motoboy_id } = req.body
+  const { codigo_pedido, bairro_id, problema, taxa, motoboy_id } = req.body
   try {
     await db.query(
-      "INSERT INTO entregas (codigo_pedido, bairro, problema, taxa, motoboy_id) VALUES (?, ?, ?, ?, ?)",
-      [codigo_pedido, bairro, problema, taxa, motoboy_id]
+      "INSERT INTO entregas (codigo_pedido, problema, taxa, bairro_id, motoboy_id) VALUES (?, ?, ?, ?, ?)",
+      [codigo_pedido, problema, taxa, bairro_id, motoboy_id]
     )
     res.status(201).json({ message: "Entrega cadastrada com sucesso!" })
   } catch (error) {

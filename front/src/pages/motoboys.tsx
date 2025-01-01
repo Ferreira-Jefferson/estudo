@@ -68,7 +68,7 @@ export default function Motoboys() {
       codigo_pedido: codigoPedido,
       problema,
       taxa,
-      bairro_id: bairro,
+      bairro_id,
       motoboy_id: selectedMotoboy,
     }
 
@@ -82,7 +82,7 @@ export default function Motoboys() {
     })
 
     if (response) {
-      const data = await fetcher(`/bairros/${bairro}`)
+      const data = await fetcher(`/bairros/${bairro_id}`)
       setEntregas([...entregas, {codigo_pedido: codigoPedido, bairro: data?.nome, taxa}])
     }
     
@@ -90,12 +90,13 @@ export default function Motoboys() {
   }
 
   // Input bairro
-  const [bairro, setBairro] = useState("")
+  const [bairro_id, setBairroId] = useState("")
+  const [bairro_nome, setBairroNome] = useState("")
   const [taxa, setTaxa] = useState(0)
   const [suggestions, setSuggestions] = useState([])
 
   const handleSearch = async query => {
-    setBairro(query)
+    setBairroNome(query)
     if (query.trim() === "") {
       setSuggestions([])
       return
@@ -106,7 +107,8 @@ export default function Motoboys() {
   }
 
   const handleSelectBairro = sugestao => {
-    setBairro(sugestao.nome)
+    setBairroId(sugestao.id)
+    setBairroNome(sugestao.nome)
     setTaxa(sugestao.taxa)
     setSuggestions([])
     console.log("ID do bairro selecionado:", sugestao.id)
@@ -203,7 +205,7 @@ export default function Motoboys() {
                   type="text"
                   id="bairro"
                   className="w-full border rounded p-2"
-                  value={bairro}
+                  value={bairro_nome}
                   onChange={e => handleSearch(e.target.value)}
                   onBlur={() => setTimeout(() => setSuggestions([]), 200)} // Fecha sugestões ao sair do campo
                 />
