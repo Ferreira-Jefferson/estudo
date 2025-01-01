@@ -110,8 +110,9 @@ export default function Motoboys() {
     setBairroId(sugestao.id)
     setBairroNome(sugestao.nome)
     setTaxa(sugestao.taxa)
-    setSuggestions([])
     console.log("ID do bairro selecionado:", sugestao.id)
+    console.log("nome do bairro selecionado:", sugestao.nome)
+    setSuggestions([])
   }
 
   return (

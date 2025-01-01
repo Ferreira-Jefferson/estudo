@@ -103,7 +103,7 @@ app.get("/api/bairros", async (req, res) => {
       res.json(rows)
     } else {
       const [rows] = await db.query(
-        "SELECT id, nome FROM bairros WHERE nome LIKE ? LIMIT 10",
+        "SELECT * FROM bairros WHERE nome LIKE ? LIMIT 10",
         [`%${query}%`]
       )
       res.json(rows)
