@@ -19,26 +19,26 @@ const Layout = ({ children, title, description }: LayoutProps): JSX.Element => {
         <meta name="keywords" content="Next.js, Tutorial, Docker, TypeScript" />
       </Head>
       <nav className="bg-gradient-to-r from-blue-500 to-purple-600 p-4">
-        <ul className="flex space-x-4">
-          <li>
+        <ul className="flex flex-wrap gap-y-2 md:gap-y-0 md:gap-x-6 justify-center md:justify-start">
+          <li className="mx-2">
             <Link
               href="/"
-              className="text-white font-semibold hover:text-gray-200"
+              className="block text-white font-semibold hover:text-gray-200"
             >
               Início
             </Link>
           </li>
-           <li>
+          <li className="mx-2">
             <Link
               href="/motoboys"
-              className="text-white font-semibold hover:text-gray-200"
+              className="block text-white font-semibold hover:text-gray-200"
             >
               Motoboys
             </Link>
           </li>
         </ul>
       </nav>
-      <main>{children}</main>
+      <main className="px-4 sm:px-6 lg:px-8 py-6">{children}</main>
     </>
   );
 };
