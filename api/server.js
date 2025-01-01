@@ -89,7 +89,7 @@ app.get("/api/entregas/:id", async (req, res) => {
     )
     res.json({ ...entregas[0] })
   } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar informações do motoboy." })
+    res.status(500).json({ error: "Erro ao buscar informações das entregas." })
   }
 })
 
@@ -111,6 +111,19 @@ app.get("/api/bairros", async (req, res) => {
   } catch (error) {
     console.error("Erro ao consultar bairros:", error)
     res.status(500).json({ error: "Erro interno no servidor" })
+  }
+})
+
+app.get("/api/bairros/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    const [bairro] = await db.query(
+      "SELECT * FROM bairros WHERE id = ?",
+      [id]
+    )
+    res.json({ ...bairro[0] })
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar informações do bairro." })
   }
 })
 
