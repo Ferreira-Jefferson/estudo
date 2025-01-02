@@ -40,7 +40,7 @@ export default function Motoboys() {
     setTotalParcial(total_parcial || 0)
 
     const data = await fetcher(`/entregas/${motoboy_id}`)
-    setEntregas([data])
+    setEntregas(data)
   }
 
   const handleSelectMotoboy = motoboy => {
@@ -88,11 +88,8 @@ export default function Motoboys() {
     })
 
     if (response) {
-      const data = await fetcher(`/bairros/${bairro_id}`)
-      setEntregas([
-        ...entregas,
-        { codigo_pedido: codigoPedido, bairro: data?.nome, taxa },
-      ])
+      const data = await fetcher(`/entregas/${selectedMotoboy}`)
+      setEntregas(data)
     }
 
     fecharModal()
@@ -187,7 +184,7 @@ export default function Motoboys() {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-1/3">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg mx-4">
             <h2 className="text-lg font-semibold mb-4">
               Adicionar Nova Corrida
             </h2>
@@ -215,16 +212,15 @@ export default function Motoboys() {
                   className="w-full border rounded p-2"
                   value={bairro_nome}
                   onChange={e => handleSearch(e.target.value)}
-                  onBlur={() => setTimeout(() => setSuggestions([]), 200)} // Fecha sugestões ao sair do campo
+                  onBlur={() => setTimeout(() => setSuggestions([]), 200)}
                 />
-                {/* Lista de sugestões */}
                 {suggestions.length > 0 && (
                   <ul className="absolute z-10 bg-white border w-full rounded shadow-md mt-1">
                     {suggestions.map(sugestao => (
                       <li
                         key={sugestao.id}
                         className="p-2 hover:bg-gray-200 cursor-pointer w-full"
-                        onMouseDown={() => handleSelectBairro(sugestao)} // Usa onMouseDown para evitar conflitos com onBlur
+                        onMouseDown={() => handleSelectBairro(sugestao)}
                       >
                         {sugestao.nome}
                       </li>
@@ -233,7 +229,6 @@ export default function Motoboys() {
                 )}
               </div>
 
-              {/* toggle switch */}
               <div className="mb-4 flex items-center">
                 <label
                   htmlFor="problema"
