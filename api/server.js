@@ -37,12 +37,12 @@ app.get("/api", async (req, res) => {
   try {
     const data = {
       status: "Conectado ao banco de dados MySQL com sucesso!",
-      motoboys: "https://degustware.com/api/motoboys",
-      motoboys_id: "https://degustware.com/api/motoboys/ID",
-      bairros: "https://degustware.com/api/bairros",
-      bairros_id_motoboy: "https://degustware.com/api/bairros/ID",
-      entregas: "https://degustware.com/api/entregas",
-      entregas_id_motoboy: "https://degustware.com/api/entregas/ID_MOTOBOY",
+      motoboys: "https://degustware.com.br/api/motoboys",
+      motoboys_id: "https://degustware.com.br/api/motoboys/ID",
+      bairros: "https://degustware.com.br/api/bairros",
+      bairros_id_motoboy: "https://degustware.com.br/api/bairros/ID",
+      entregas: "https://degustware.com.br/api/entregas",
+      entregas_id_motoboy: "https://degustware.com.br/api/entregas/ID_MOTOBOY",
     }
     res.json(data)
   } catch (err) {
