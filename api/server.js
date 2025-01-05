@@ -35,8 +35,16 @@ const db = mysql.createPool({
 // Endpoint para listar produtos
 app.get("/api", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT * FROM products;")
-    res.json(rows)
+    const data = {
+      status: "Conectado ao banco de dados MySQL com sucesso!",
+      motoboys: "https://degustware.com/api/motoboys",
+      motoboys_id: "https://degustware.com/api/motoboys/ID",
+      bairros: "https://degustware.com/api/bairros",
+      bairros_id_motoboy: "https://degustware.com/api/bairros/ID",
+      entregas: "https://degustware.com/api/entregas",
+      entregas_id_motoboy: "https://degustware.com/api/entregas/ID_MOTOBOY",
+    }
+    res.json(data)
   } catch (err) {
     res.status(500).json({ error: "Erro ao listar produtos." })
   }
@@ -81,7 +89,6 @@ app.get("/api/motoboys/:id", async (req, res) => {
 })
 
 app.get("/api/entregas", async (req, res) => {
-
   try {
     const [entregas] = await db.query(
       `
@@ -105,8 +112,8 @@ app.get("/api/entregas", async (req, res) => {
   }
 })
 
-app.get("/api/entregas/:id", async (req, res) => {
-  const { id } = req.params
+app.get("/api/entregas/:id_motoboy", async (req, res) => {
+  const { id_motoboy } = req.params
 
   try {
     const [entregas] = await db.query(
@@ -122,8 +129,9 @@ app.get("/api/entregas/:id", async (req, res) => {
     FROM entregas
     JOIN bairros ON entregas.bairro_id = bairros.id
     WHERE entregas.motoboy_id = ?
+    AND DATE(entregas.data_registro) = CURDATE()
     `,
-      [id]
+      [id_motoboy]
     )
     res.json(entregas)
   } catch (error) {

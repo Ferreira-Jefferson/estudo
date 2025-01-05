@@ -33,22 +33,22 @@ export default function Motoboys() {
   }, [])
 
   const handleChangeMotoboy = async motoboy_id => {
-    const { entregues, total_parcial } = await fetcher(
+    const { entregues, total_parcial, diaria } = await fetcher(
       `/motoboys/${motoboy_id}`
     )
     setPedidosEntregues(entregues || 0)
-    setTotalParcial(total_parcial || 0)
+    const totalParcial = parseFloat(total_parcial) + parseFloat(diaria) 
+    setTotalParcial(totalParcial|| 0)
 
     const data = await fetcher(`/entregas/${motoboy_id}`)
     setEntregas(data)
   }
 
-  const handleSelectMotoboy = motoboy => {
+  const handleSelectMotoboy = async motoboy => {
     setAbrirMensagemErro(false)
     setSelectedMotoboy(motoboy?.id)
     setDiaria(motoboy?.diaria || 0)
     setPedidosEntregues(motoboy?.pedidosEntregues || 0)
-    setTotalParcial(motoboy?.totalParcial || 0)
     handleChangeMotoboy(motoboy?.id)
   }
 
@@ -153,12 +153,14 @@ export default function Motoboys() {
         </div>
 
         {/* Botão para adicionar nova corrida */}
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-          onClick={abrirModal}
-        >
-          + Nova Corrida
-        </button>
+        <div className="flex justify-center">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+            onClick={abrirModal}
+          >
+            + Nova Corrida
+          </button>
+        </div>
 
         {/* Tabela de corridas */}
         <table className="table-auto w-full border">

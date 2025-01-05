@@ -1,12 +1,5 @@
 USE degustware;
 
-CREATE TABLE IF NOT EXISTS products (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100),
-  description VARCHAR(255),
-  price DECIMAL(10, 2)
-);
-
 -- Criar a tabela de motoboys
 CREATE TABLE IF NOT EXISTS motoboys (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -37,18 +30,16 @@ CREATE TABLE IF NOT EXISTS entregas (
     FOREIGN KEY (bairro_id) REFERENCES bairros(id)
 );
 
-
-INSERT INTO products (name, description, price) VALUES
-  ('Bife Acebolado', 'Bife com cebola', 25.50),
-  ('Frango à Milanesa', 'Frango empanado e frito', 22.00),
-  ('Arroz e Feijão', 'Acompanhamento tradicional', 10.00);
-  
-  
 -- Inserir dados de teste na tabela de motoboys
 INSERT INTO motoboys (nome, codigo, diaria) VALUES 
-('João Silva', 1234, 100.00),
-('Maria Oliveira', 5678, 120.00),
-('Carlos Santos', 9101, 150.00);
+('João', 0001, 35.00),
+('Chacrinha', 0010, 35.00),
+('Iago',0011 , 35.00);
+('Lucas Bironha', 0100, 30.00);
+('Lucas Churrasco', 0101, 35.00);
+('Almir Rogério', 0110, 35.00);
+('Luiz', 0111, 35.00);
+('Novo boy', 1000, 35.00);
 
 
 -- Inserir dados de teste na tabela de bairros
