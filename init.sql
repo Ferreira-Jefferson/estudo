@@ -34,11 +34,11 @@ CREATE TABLE IF NOT EXISTS entregas (
 INSERT INTO motoboys (nome, codigo, diaria) VALUES 
 ('João', 0001, 35.00),
 ('Chacrinha', 0010, 35.00),
-('Iago',0011 , 35.00);
-('Lucas Bironha', 0100, 30.00);
-('Lucas Churrasco', 0101, 35.00);
-('Almir Rogério', 0110, 35.00);
-('Luiz', 0111, 35.00);
+('Iago',0011 , 35.00),
+('Lucas Bironha', 0100, 30.00),
+('Lucas Churrasco', 0101, 35.00),
+('Almir Rogério', 0110, 35.00),
+('Luiz', 0111, 35.00),
 ('Novo boy', 1000, 35.00);
 
 
@@ -54,5 +54,5 @@ INSERT INTO entregas (codigo_pedido, problema, taxa, bairro_id, motoboy_id) VALU
 ('123', FALSE, 10.00, 1, 1),
 ('456', FALSE, 15.00, 2, 2),
 ('789', TRUE, 12.50, 3, 3),
-('012', FALSE, 20.00, 4, 1);
+('012', FALSE, 20.00, 4, 1),
 ('aiq', FALSE, 15.00, 1, 1);

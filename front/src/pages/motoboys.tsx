@@ -25,6 +25,7 @@ export default function Motoboys() {
 
   const carregarMotoboys = async () => {
     const data = await fetcher("/motoboys")
+    console.log({data})
     setMotoboys(data)
   }
 
