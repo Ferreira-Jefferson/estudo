@@ -60,7 +60,6 @@ app.get("/api", async (req, res) => {
 // Listar motoboys
 app.get("/api/motoboys", async (req, res) => {
   const [rows] = await db.query("SELECT * FROM motoboys")
-  console.log({ rows })
   res.json(rows)
 })
 
