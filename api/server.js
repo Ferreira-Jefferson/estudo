@@ -9,12 +9,6 @@ const port = 3000
 // Middleware cors
 app.use(cors())
 
-// Middleware para definir o charset correto
-app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8')
-  next()
-})
-
 // Middleware para parsear JSON
 app.use(bodyParser.json())
 
