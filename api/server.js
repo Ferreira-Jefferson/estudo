@@ -12,6 +12,12 @@ app.use(cors())
 // Middleware para parsear JSON
 app.use(bodyParser.json())
 
+// Middleware para definir o charset correto para todas as respostas
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+  next()
+})
+
 const db = mysql.createPool({
   host: process.env.MYSQL_HOST || "db",
   user: process.env.MYSQL_USER || "user",
