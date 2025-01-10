@@ -53,7 +53,7 @@ app.get("/api", async (req, res) => {
 
 // Listar motoboys
 app.get("/api/motoboys", async (req, res) => {
-  const [rows] = await db.query("SELECT * FROM motoboys")
+  const [rows] = await db.query("SELECT id, codigo, diaria, CONVERT(nome USING utf8) AS nome FROM motoboys");")
   res.json(rows)
 })
 

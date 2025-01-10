@@ -25,7 +25,8 @@ export default function Motoboys() {
 
   const carregarMotoboys = async () => {
     const data = await fetcher("/motoboys")
-    console.log({data})
+    let data_2 = data.map(item => ({ ...item, nome: item.nome ? decodeURIComponent(escape(item.nome)) : "" }));
+    console.log({data, data_2})
     setMotoboys(data)
   }
 
