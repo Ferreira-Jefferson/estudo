@@ -9,14 +9,14 @@ const port = 3000
 // Middleware cors
 app.use(cors())
 
-// Middleware para parsear JSON
-app.use(bodyParser.json())
-
 // Middleware para definir o charset correto
 app.use((req, res, next) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8')
   next()
 })
+
+// Middleware para parsear JSON
+app.use(bodyParser.json())
 
 const db = mysql.createPool({
   host: process.env.MYSQL_HOST || "db",
@@ -60,7 +60,7 @@ app.get("/api", async (req, res) => {
 // Listar motoboys
 app.get("/api/motoboys", async (req, res) => {
   const [rows] = await db.query("SELECT * FROM motoboys")
-  console.log({ rows:JSON.stringify(rows) })
+  console.log({ rows })
   res.json(rows)
 })
 
