@@ -1,9 +1,6 @@
 # Use Node.js como imagem base
 FROM node:18
 
-# Definindo a variável de ambiente LANG 
-ENV LANG en_US.UTF-8
-
 # Defina o diretório de trabalho
 WORKDIR /app
 
