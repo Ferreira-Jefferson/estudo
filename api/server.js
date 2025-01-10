@@ -12,6 +12,12 @@ app.use(cors())
 // Middleware para parsear JSON
 app.use(bodyParser.json())
 
+// Middleware para definir o charset correto
+app.use((req, res, next) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+  next()
+})
+
 const db = mysql.createPool({
   host: process.env.MYSQL_HOST || "db",
   user: process.env.MYSQL_USER || "user",
@@ -53,9 +59,7 @@ app.get("/api", async (req, res) => {
 
 // Listar motoboys
 app.get("/api/motoboys", async (req, res) => {
-  const connection = await db.getConnection()
-  await connection.query("SET NAMES utf8mb4")
-  const [rows] = await connection.query("SELECT * FROM motoboys")
+  const [rows] = await db.query("SELECT * FROM motoboys")
   console.log({ rows })
   res.json(rows)
 })
@@ -64,9 +68,7 @@ app.get("/api/motoboys", async (req, res) => {
 app.post("/api/motoboys", async (req, res) => {
   const { nome, codigo, diaria } = req.body
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
-    await connection.query(
+    await db.query(
       "INSERT INTO motoboys (nome, codigo, diaria) VALUES (?, ?, ?)",
       [nome, codigo, diaria]
     )
@@ -80,13 +82,11 @@ app.post("/api/motoboys", async (req, res) => {
 app.get("/api/motoboys/:id", async (req, res) => {
   const { id } = req.params
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
-    const [motoboy] = await connection.query(
+    const [motoboy] = await db.query(
       "SELECT diaria FROM motoboys WHERE id = ?",
       [id]
     )
-    const [entregas] = await connection.query(
+    const [entregas] = await db.query(
       "SELECT COUNT(*) AS entregues, SUM(taxa) AS total_parcial FROM entregas WHERE motoboy_id = ?",
       [id]
     )
@@ -98,9 +98,7 @@ app.get("/api/motoboys/:id", async (req, res) => {
 
 app.get("/api/entregas", async (req, res) => {
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
-    const [entregas] = await connection.query(
+    const [entregas] = await db.query(
       `
     SELECT 
       entregas.id,
@@ -125,9 +123,7 @@ app.get("/api/entregas", async (req, res) => {
 app.get("/api/entregas/:id_motoboy", async (req, res) => {
   const { id_motoboy } = req.params
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
-    const [entregas] = await connection.query(
+    const [entregas] = await db.query(
       `
     SELECT 
       entregas.id,
@@ -155,13 +151,11 @@ app.get("/api/entregas/:id_motoboy", async (req, res) => {
 app.get("/api/bairros", async (req, res) => {
   const { query } = req.query
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
     if (!query) {
-      const [rows] = await connection.query("SELECT * FROM bairros")
+      const [rows] = await db.query("SELECT * FROM bairros")
       res.json(rows)
     } else {
-      const [rows] = await connection.query(
+      const [rows] = await db.query(
         "SELECT * FROM bairros WHERE nome LIKE ? LIMIT 10",
         [`%${query}%`]
       )
@@ -176,9 +170,7 @@ app.get("/api/bairros", async (req, res) => {
 app.get("/api/bairros/:id", async (req, res) => {
   const { id } = req.params
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
-    const [bairro] = await connection.query("SELECT * FROM bairros WHERE id = ?", [id])
+    const [bairro] = await db.query("SELECT * FROM bairros WHERE id = ?", [id])
     res.json({ ...bairro[0] })
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar informações do bairro." })
@@ -189,9 +181,7 @@ app.get("/api/bairros/:id", async (req, res) => {
 app.post("/api/entregas", async (req, res) => {
   const { codigo_pedido, bairro_id, problema, taxa, motoboy_id } = req.body
   try {
-    const connection = await db.getConnection()
-    await connection.query("SET NAMES utf8mb4")
-    await connection.query(
+    await db.query(
       "INSERT INTO entregas (codigo_pedido, problema, taxa, bairro_id, motoboy_id) VALUES (?, ?, ?, ?, ?)",
       [codigo_pedido, problema, taxa, bairro_id, motoboy_id]
     )
