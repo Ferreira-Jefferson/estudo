@@ -131,7 +131,7 @@ app.get("/api/entregas/:parametro", async (req, res) => {
     FROM entregas
     JOIN bairros ON entregas.bairro_id = bairros.id
     WHERE entregas.motoboy_id = ?
-    ${query}
+    ${query ? query : ""}
     `,
       [id_motoboy]
     )
