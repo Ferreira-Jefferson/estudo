@@ -42,7 +42,7 @@ export default function Motoboys() {
     )
 
     const url = dateFilter
-      ? `/entregas/${motoboy_id}$${dateFilter}`
+      ? `/entregas/${motoboy_id}|${dateFilter}`
       : `/entregas/${motoboy_id}`
     const data = await fetcher(url)
 
