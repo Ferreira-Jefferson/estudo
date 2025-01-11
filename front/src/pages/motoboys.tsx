@@ -25,24 +25,30 @@ export default function Motoboys() {
 
   const carregarMotoboys = async () => {
     const data = await fetcher("/motoboys")
-    let data_2 = data.map(item => ({ ...item, nome: item.nome ? decodeURIComponent(escape(item.nome)) : "" }));
-    console.log({data, data_2})
-    setMotoboys(data)
+    const data_utf8 = data.map(item => ({
+      ...item,
+      nome: item.nome ? decodeURIComponent(escape(item.nome)) : "",
+    }))
+    setMotoboys(data_utf8)
   }
 
   useEffect(() => {
     carregarMotoboys()
   }, [])
 
-  const handleChangeMotoboy = async motoboy_id => {
+  const handleChangeMotoboy = async (motoboy_id, dateFilter = undefined) => {
     const { entregues, total_parcial, diaria } = await fetcher(
       `/motoboys/${motoboy_id}`
     )
-    setPedidosEntregues(entregues || 0)
-    const totalParcial = parseFloat(total_parcial) + parseFloat(diaria) 
-    setTotalParcial(totalParcial|| 0)
 
-    const data = await fetcher(`/entregas/${motoboy_id}`)
+    const url = dateFilter
+      ? `/entregas/${motoboy_id}$${dateFilter}`
+      : `/entregas/${motoboy_id}`
+    const data = await fetcher(url)
+
+    setPedidosEntregues(entregues || 0)
+    const totalParcial = parseFloat(total_parcial) + parseFloat(diaria)
+    setTotalParcial(totalParcial || 0)
     setEntregas(data)
   }
 
@@ -51,7 +57,27 @@ export default function Motoboys() {
     setSelectedMotoboy(motoboy?.id)
     setDiaria(motoboy?.diaria || 0)
     setPedidosEntregues(motoboy?.pedidosEntregues || 0)
-    handleChangeMotoboy(motoboy?.id)
+  }
+
+  const buscarEntregas = () => {
+    let dateFilter = ""
+    const isValidEndDate = new Date(endDate) > new Date(startDate)
+
+    if (startDate) {
+      dateFilter += ` AND DATE(entregas.data_registro) ${
+        isValidEndDate ? ">=" : "="
+      } '${startDate}'`
+    }
+
+    if (endDate && isValidEndDate) {
+      dateFilter += ` AND DATE(entregas.data_registro) <= '${endDate}'`
+    }
+
+    if(!dateFilter) {
+      dateFilter = " AND DATE(entregas.data_registro) = CURDATE()"
+    }
+
+    handleChangeMotoboy(selectedMotoboy, dateFilter)
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -121,34 +147,79 @@ export default function Motoboys() {
     setSuggestions([])
   }
 
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+
+  const makeDate = date => {
+    if (date === "") {
+      const today = new Date()
+      const year = today.getFullYear()
+      const month = String(today.getMonth() + 1).padStart(2, "0")
+      const day = String(today.getDate()).padStart(2, "0")
+      return `${year}-${month}-${day}`
+    }
+
+    return date
+  }
+
   return (
     <Layout title="" description="">
       <div className="p-6 bg-gray-100">
         {/* Select de motoboys */}
-        <div className="mb-5">
-          <label htmlFor="motoboys" className="block text-gray-700">
-            Motoboy:
-          </label>
-          <select
-            id="motoboys"
-            className="border rounded p-2"
-            onChange={e =>
-              handleSelectMotoboy(
-                motoboys.find(motoboy => motoboy.id == e.target.value)
-              )
-            }
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+          <div className="mb-5">
+            <label htmlFor="motoboys" className="block text-gray-700">
+              Motoboy:
+            </label>
+            <select
+              id="motoboys"
+              className="border rounded p-2"
+              onChange={e =>
+                handleSelectMotoboy(
+                  motoboys.find(motoboy => motoboy.id == e.target.value)
+                )
+              }
+            >
+              <option value="">Selecione um motoboy</option>
+              {motoboys.map(motoboy => (
+                <option key={motoboy.id} value={motoboy.id}>
+                  {motoboy.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex-2">
+            <label className="block text-gray-700">Data Inicial:</label>
+            <input
+              type="date"
+              value={startDate}
+              onChange={e => setStartDate(makeDate(e.target.value))}
+              className="mt-1 p-2 border rounded"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block text-gray-700">Data Final:</label>
+            <input
+              type="date"
+              value={endDate}
+              onChange={e => setEndDate(makeDate(e.target.value))}
+              className="mt-1 p-2 border rounded"
+            />
+          </div>
+        </div>
+
+        {/* Botão para adicionar nova corrida */}
+        <div>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+            onClick={buscarEntregas}
           >
-            <option value="">Selecione um motoboy</option>
-            {motoboys.map(motoboy => (
-              <option key={motoboy.id} value={motoboy.id}>
-                {motoboy.nome}
-              </option>
-            ))}
-          </select>
+            Buscar Entregas
+          </button>
         </div>
 
         {/* Informações do motoboy */}
-        <div className="mb-5">
+        <div className="mt-10 mb-5">
           <p>Diária: R$ {diaria}</p>
           <p>Pedidos Entregues: {pedidosEntregues}</p>
           <p>Total Parcial: R$ {totalParcial}</p>

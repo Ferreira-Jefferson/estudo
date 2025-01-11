@@ -113,8 +113,9 @@ app.get("/api/entregas", async (req, res) => {
   }
 })
 
-app.get("/api/entregas/:id_motoboy", async (req, res) => {
-  const { id_motoboy } = req.params
+app.get("/api/entregas/:parametro", async (req, res) => {
+  const { parametro } = req.params
+  const [id_motoboy, query] = parametro.split("$")
   try {
     const [entregas] = await db.query(
       `
@@ -129,7 +130,7 @@ app.get("/api/entregas/:id_motoboy", async (req, res) => {
     FROM entregas
     JOIN bairros ON entregas.bairro_id = bairros.id
     WHERE entregas.motoboy_id = ?
-    AND DATE(entregas.data_registro) = CURDATE()
+    ${query}
     `,
       [id_motoboy]
     )
