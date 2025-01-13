@@ -116,7 +116,7 @@ app.get("/api/entregas", async (req, res) => {
 app.get("/api/entregas/:parametro", async (req, res) => {
   const { parametro } = req.params
   const [id_motoboy, query] = parametro.split("$")
-  console.log({parametro, id_motoboy, query})
+
   try {
     const [entregas] = await db.query(
       `
