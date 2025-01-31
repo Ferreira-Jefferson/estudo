@@ -2,8 +2,11 @@ services:
   db:
     image: mysql
     restart: always
-    env_file:
-      - ../.env
+    environment:
+      MYSQL_ROOT_PASSWORD: local_password
+      MYSQL_DATABASE: syscon_bd
+      MYSQL_USER: root
+      MYSQL_PASSWORD: local_password
     command: --log-bin-trust-function-creators=1
     volumes:
       - db:/var/lib/mysql
