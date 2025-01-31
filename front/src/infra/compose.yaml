@@ -4,9 +4,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: local_password
-      MYSQL_DATABASE: syscon_bd
-      MYSQL_USER: root
-      MYSQL_PASSWORD: local_password
+      MYSQL_DATABASE:
     command: --log-bin-trust-function-creators=1
     volumes:
       - db:/var/lib/mysql
