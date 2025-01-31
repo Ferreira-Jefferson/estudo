@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS syscon_bd;
+CREATE DATABASE IF NOT EXISTS degustware;
+
 USE degustware;
 
 -- Criar a tabela de motoboys
