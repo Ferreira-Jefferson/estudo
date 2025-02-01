@@ -6,5 +6,5 @@ export default  {
   backupFile: path.join("backups", "backup.sql"),
   containerName,
   databaseName: "syscon_bd",
-  baseCommand: `docker exec -e MYSQL_PWD=rootpassword -i ${containerName} mysql -uroot`,
+  baseCommand: `docker exec -e MYSQL_PWD=rootpassword -i ${containerName} mysql -uroot -hdb,`
 };

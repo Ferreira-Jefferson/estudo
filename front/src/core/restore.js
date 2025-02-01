@@ -53,6 +53,7 @@ async function showTables() {
 
 export default async function main(backupFile) {
   try {
+  await selectDbToUse();
     await deleteDatabase();
     await createDatabase();
     await restoreDatabase(backupFile);
