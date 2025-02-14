@@ -40,7 +40,7 @@ services:
     restart: always
     container_name: nginx
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - /nginx-root/default.conf:/etc/nginx/conf.d/default.conf
       - /etc/letsencrypt/live/degustware.com.br/fullchain.pem:/etc/letsencrypt/live/degustware.com.br/fullchain.pem:ro
       - /etc/letsencrypt/live/degustware.com.br/privkey.pem:/etc/letsencrypt/live/degustware.com.br/privkey.pem:ro
     ports:
