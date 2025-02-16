@@ -55,7 +55,7 @@ INSERT INTO bairros (nome, taxa) VALUES
 -- Inserir dados de teste na tabela de entregas
 INSERT INTO entregas (codigo_pedido, problema, taxa, bairro_id, motoboy_id) VALUES 
 ('123', FALSE, 10.00, 1, 1),
-('456', FALSE, 15.00, 2, 2),
+('456', FALSE, 25.00, 2, 2),
 ('789', TRUE, 12.50, 3, 3),
 ('012', FALSE, 20.00, 4, 1),
 ('aiq', FALSE, 15.00, 1, 1);
