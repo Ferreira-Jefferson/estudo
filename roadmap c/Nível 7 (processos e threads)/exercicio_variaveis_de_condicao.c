@@ -8,13 +8,14 @@ pthread_mutex_t mutex_pedido = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond_pedido_pronto = PTHREAD_COND_INITIALIZER;
 
 int pedido_pronto = 0;
+int acabou_pedidos = 0;
 
 
 int qtd = 5;
 void* chef(void* args)
 {
 	int i = 0;
-	while(1)
+	while(i < NUM_GARCONS)
 	{
 		pthread_mutex_lock(&mutex_pedido);
 		printf("Chef: preprando pedido %d\n", i+1);
@@ -29,6 +30,10 @@ void* chef(void* args)
 		sleep(1); 
 		i++;
 	}
+	pthread_mutex_lock(&mutex_pedido);
+    acabou_pedidos = 1;
+    pthread_cond_broadcast(&cond_pedido_pronto);  // Libera garçons que ainda estiverem esperando
+    pthread_mutex_unlock(&mutex_pedido);
 	return (NULL);
 }
 
@@ -39,16 +44,22 @@ void* garcom(void* args)
 	while(1)
 	{
 		pthread_mutex_lock(&mutex_pedido);
-		while(!pedido_pronto)
+		while(!pedido_pronto && !acabou_pedidos)
 		{
 			pthread_cond_wait(&cond_pedido_pronto, &mutex_pedido);
+		}
+
+		if(acabou_pedidos)
+		{
+			pthread_mutex_unlock(&mutex_pedido);
+			break;
 		}
 
 		printf("Garcom %d: entreguando pedido.\n", id);
 		pedido_pronto = 0;
 		pthread_mutex_unlock(&mutex_pedido);
 		sleep(3);
-		printf("Garcom %d: pedido entregue\n", id);
+		printf("Garcom %d: pedido entregue\n\n", id);
 	}
 	return (NULL);
 }
