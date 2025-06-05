@@ -45,3 +45,7 @@
 - semaphore (sem): Limita o acesso a um determinado recurso até a quantidade informado no semaphore
 - Ideal para quando um recurso pode ser acessado por mais de uma thread ao mesmo tempo, mas acima de uma determinada quantidade o acesso deve ser bloqueado.
 - Muito utilizada em conjunto com pthread.h para informar quantas threads podem compartilhar um mesmo recurso ao mesmo tempo, imagine uma cozinha com um chefe que faz um prato e informa quando ele está pronto (mutex), mas esse prato após pronto pode ser pego por N threads, sendo que a primeira que pegar bloqueia o prato (recurso), até entregar ao cliente.
+
+# threads.h
+- Mais intuitiva e menos verbosa que a pthread.h, entretanto também mais limitada.
+- Não tem integração direta com a semaphore.h e seu uso em conjunto é desestimulado, por poder causar comportamento indeterminado.
