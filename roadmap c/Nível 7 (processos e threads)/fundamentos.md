@@ -36,3 +36,12 @@
 - Execução preemptiva: O sistema operacional faz a gestão da liberação de recursos e coordenação dos processos/threads, é o padrão hoje em dia. Sua principal caracteristica é que pode interromper um processos/threads para liberar os recursos para outro.
 
 - Execução cooperativa: Os próprios processos/threads se coordenam para informar se estão utilziando determinado recurso ou não, é menos usado hoje em dia, sendo mais comum em sistemas embarcados, pois é necessário confiar que nenhum processos/threads irá monopolizar um determinado recurso.
+
+# pthread.h
+- mutex: Usado para bloquear um recurso até o fim de sua utilização, evitando condições de corrida.
+- condition (cond): Usando para informar a uma determinada thread que o recurso que ela espera está.
+
+# semaphore.h
+- semaphore (sem): Limita o acesso a um determinado recurso até a quantidade informado no semaphore
+- Ideal para quando um recurso pode ser acessado por mais de uma thread ao mesmo tempo, mas acima de uma determinada quantidade o acesso deve ser bloqueado.
+- Muito utilizada em conjunto com pthread.h para informar quantas threads podem compartilhar um mesmo recurso ao mesmo tempo, imagine uma cozinha com um chefe que faz um prato e informa quando ele está pronto (mutex), mas esse prato após pronto pode ser pego por N threads, sendo que a primeira que pegar bloqueia o prato (recurso), até entregar ao cliente.
