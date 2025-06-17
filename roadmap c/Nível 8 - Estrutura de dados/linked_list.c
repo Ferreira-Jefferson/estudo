@@ -58,8 +58,8 @@ void insert_in_end(Node **head, int value)
 	Node *node_aux = create_node(value);
 	if (*head == NULL)
 	{
+		node_aux->index = 0;
 		*head = node_aux;
-		(*head)->index = 0;
 		return ;
 	}
 
@@ -70,6 +70,39 @@ void insert_in_end(Node **head, int value)
 	}
 	node_aux->index = node_current->index + 1;
 	node_current->next = node_aux;
+}
+
+void insert_at_index(Node **head, int value, size_t index)
+{
+    Node *new_node = create_node(value);
+    if (!new_node)
+        return; 
+
+    if (*head == NULL || index == 0)
+    {
+		new_node->index = 0;
+        new_node->next = *head;
+        *head = new_node;
+		update_index(head);
+        return;
+    }
+
+    Node *current = *head;
+    while (current->next != NULL)
+    {
+		if(current->index == index)
+			break;
+        current = current->next;
+    }
+
+    if (current->next == NULL) {
+        current->next = new_node;
+    } else {
+        new_node->next = current->next;
+        current->next = new_node;
+    }
+
+    update_index(head);
 }
 
 void print_node(const Node *head)
@@ -103,7 +136,10 @@ int main(void)
 	insert_in_begin(&my_node, 10);
 	insert_in_end(&my_node, 15);
 	insert_in_end(&my_node, 20);
-	insert_in_begin(&my_node, 1);
+	insert_in_begin(&my_node, 2);
+	insert_at_index(&my_node, 1, 0);
+	insert_at_index(&my_node, 11, 2);
+	insert_at_index(&my_node, 25, 7);
 
 	print_node(my_node);
 
