@@ -34,6 +34,19 @@ Racional* criar(int p, int q)
 	return (racional);
 }
 
+int mmc(int n1, int n2)
+{
+	n1 = abs(n1);
+	n2 = abs(n2);
+	while(n2 != 0)
+	{
+		int temp = n2;
+		n2 = n1 % n2;
+		n1 = temp;
+	}
+	return n1;
+}
+
 Racional *somar(Racional *r1, Racional *r2)
 {
 	Racional *racional = (Racional*) malloc(sizeof(Racional));
@@ -50,7 +63,8 @@ Racional *somar(Racional *r1, Racional *r2)
 		return (racional);
 	}
 
-	int den_comum = r1->denominador * r2->denominador;
+	int den_comum = mmc(r1->denominador, r2->denominador);
+	printf("Teste:%d\n", den_comum);
 	racional->numerador = (den_comum / r1->denominador) * r1->numerador  + (den_comum / r2->denominador) * r2->numerador;
 	racional->denominador = den_comum;
 
