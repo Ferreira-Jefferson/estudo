@@ -65,9 +65,8 @@ void insert_in_end(Node **head, int value)
 
 	Node *node_current = *head;
 	while(node_current->next != NULL)
-	{
 		node_current = node_current->next;
-	}
+	
 	node_aux->index = node_current->index + 1;
 	node_current->next = node_aux;
 }
@@ -88,12 +87,8 @@ void insert_at_index(Node **head, int value, size_t index)
     }
 
     Node *current = *head;
-    while (current->next != NULL)
-    {
-		if(current->index == index)
-			break;
+    while (current->next != NULL && current->index < index)
         current = current->next;
-    }
 
     if (current->next == NULL) {
         current->next = new_node;
@@ -116,6 +111,36 @@ void print_node(const Node *head)
 	}	
 }
 
+void remove_at_index(Node **head, size_t index)
+{
+	Node *current = *head;
+	Node *node_to_free;
+	if (!current)
+		return ;
+
+	if(index == 0)
+	{
+		node_to_free = current;
+		*head = current->next;
+		free(node_to_free);
+		if((*head) != NULL)
+			(*head)->index = 0;
+		update_index(head);	
+		return ;
+	}
+
+	while(current->next != NULL && current->next->index < index)
+		current = current->next;
+
+	if(current->next == NULL)
+		return perror("Error: indice não encontrado.\n");
+
+	node_to_free = current->next;
+	current->next = current->next->next;
+	free(node_to_free);
+	update_index(head);		
+}
+
 void free_node(Node **head)
 {
 	Node *current = *head;
@@ -132,14 +157,11 @@ void free_node(Node **head)
 
 int main(void)
 {
-	Node *my_node = create_node(5);
+	Node *my_node = create_node(10);
 	insert_in_begin(&my_node, 10);
-	insert_in_end(&my_node, 15);
-	insert_in_end(&my_node, 20);
-	insert_in_begin(&my_node, 2);
-	insert_at_index(&my_node, 1, 0);
-	insert_at_index(&my_node, 11, 2);
-	insert_at_index(&my_node, 25, 7);
+	insert_in_end(&my_node, 40);
+
+	remove_at_index(&my_node, 3);
 
 	print_node(my_node);
 
