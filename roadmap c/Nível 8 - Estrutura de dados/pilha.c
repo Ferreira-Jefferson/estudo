@@ -84,7 +84,6 @@ void free_stack(Node **head)
 		current = current->next;
 		free(to_free);
 	}
-	free(*head);
 	*head = NULL;
 }
 
